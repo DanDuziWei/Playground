@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leo vs Leon 足球能力对比</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #e2e8f0;
+        --accent-a: #22c55e;
+        --accent-b: #38bdf8;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        background: linear-gradient(135deg, #020617, #0f172a 45%, #1d4ed8);
+        color: var(--text);
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      h1 { margin-bottom: 8px; }
+      .subtitle { color: #cbd5e1; margin-bottom: 24px; }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .card {
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 14px;
+        padding: 16px;
+      }
+      .score {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 8px 0 0;
+      }
+      .chart-wrap {
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 14px;
+        padding: 16px;
+        margin: 16px 0;
+      }
+      canvas { width: 100% !important; max-height: 420px; }
+      .badge {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: .85rem;
+        background: rgba(34,197,94,.2);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1>⚽ Leo vs Leon 足球能力展示</h1>
+      <p class="subtitle">从射门、带球到速度和防守，直观看两位球员谁更强。</p>
+
+      <section class="cards">
+        <article class="card">
+          <h2>Leo</h2>
+          <p>综合评分</p>
+          <p class="score" id="leoOverall"></p>
+          <span class="badge">突破型前场</span>
+        </article>
+        <article class="card">
+          <h2>Leon</h2>
+          <p>综合评分</p>
+          <p class="score" id="leonOverall"></p>
+          <span class="badge" style="background: rgba(56,189,248,.2)">全能型中前场</span>
+        </article>
+      </section>
+
+      <section class="chart-wrap">
+        <h3>能力雷达图</h3>
+        <canvas id="radarChart"></canvas>
+      </section>
+
+      <section class="chart-wrap">
+        <h3>关键能力柱状对比</h3>
+        <canvas id="barChart"></canvas>
+      </section>
+    </main>
+
+    <script>
+      const abilities = ["射门", "带球", "速度", "传球", "防守", "体能"];
+      const leo = [90, 88, 86, 80, 65, 78];
+      const leon = [84, 82, 80, 88, 75, 85];
+
+      const average = (arr) => (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1);
+      document.getElementById("leoOverall").textContent = average(leo);
+      document.getElementById("leonOverall").textContent = average(leon);
+
+      new Chart(document.getElementById("radarChart"), {
+        type: "radar",
+        data: {
+          labels: abilities,
+          datasets: [
+            {
+              label: "Leo",
+              data: leo,
+              borderColor: "#22c55e",
+              backgroundColor: "rgba(34,197,94,.25)",
+              pointBackgroundColor: "#22c55e"
+            },
+            {
+              label: "Leon",
+              data: leon,
+              borderColor: "#38bdf8",
+              backgroundColor: "rgba(56,189,248,.25)",
+              pointBackgroundColor: "#38bdf8"
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            r: {
+              suggestedMin: 40,
+              suggestedMax: 100,
+              ticks: { color: "#94a3b8" },
+              pointLabels: { color: "#e2e8f0", font: { size: 14 } },
+              grid: { color: "rgba(148,163,184,.25)" }
+            }
+          },
+          plugins: {
+            legend: { labels: { color: "#e2e8f0" } }
+          }
+        }
+      });
+
+      new Chart(document.getElementById("barChart"), {
+        type: "bar",
+        data: {
+          labels: abilities,
+          datasets: [
+            { label: "Leo", data: leo, backgroundColor: "rgba(34,197,94,.7)" },
+            { label: "Leon", data: leon, backgroundColor: "rgba(56,189,248,.7)" }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { ticks: { color: "#e2e8f0" }, grid: { color: "rgba(148,163,184,.2)" } },
+            y: { beginAtZero: true, max: 100, ticks: { color: "#e2e8f0" }, grid: { color: "rgba(148,163,184,.2)" } }
+          },
+          plugins: { legend: { labels: { color: "#e2e8f0" } } }
+        }
+      });
+    </script>
+  </body>
+</html>
