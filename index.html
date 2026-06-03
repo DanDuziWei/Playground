@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>量子计算应用 | Quantum Playground</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Quantum Computing Playground</p>
+          <h1>量子计算交互式实验室</h1>
+          <p class="hero-copy">
+            通过量子门、Bell 态、概率柱状图与 Bloch 球，可视化理解叠加、相位、纠缠和测量塌缩。
+          </p>
+        </div>
+        <div class="measurement-panel">
+          <span>当前测量</span>
+          <strong id="measurement">尚未测量</strong>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card controls">
+          <div class="card-heading">
+            <p>01 / 操作量子线路</p>
+            <h2>量子门控制台</h2>
+          </div>
+
+          <label class="field">
+            目标量子位
+            <select id="target-qubit">
+              <option value="0">q0（低位）</option>
+              <option value="1">q1（高位）</option>
+            </select>
+          </label>
+
+          <div class="button-grid" aria-label="single qubit gates">
+            <button data-gate="H">H 叠加</button>
+            <button data-gate="X">X 翻转</button>
+            <button data-gate="Y">Y 相位翻转</button>
+            <button data-gate="Z">Z 相位</button>
+            <button data-gate="S">S π/2</button>
+            <button data-gate="T">T π/4</button>
+          </div>
+
+          <label class="field slider-field">
+            旋转角度 θ：<span id="theta-value">0.50π</span>
+            <input id="theta" type="range" min="-2" max="2" value="0.5" step="0.05" />
+          </label>
+
+          <div class="button-grid rotation-grid" aria-label="rotation gates">
+            <button data-rotation="X">RX(θ)</button>
+            <button data-rotation="Y">RY(θ)</button>
+            <button data-rotation="Z">RZ(θ)</button>
+          </div>
+
+          <div class="action-row">
+            <button id="bell" class="accent">生成 Bell 态</button>
+            <button id="measure">测量</button>
+            <button id="reset" class="ghost">重置</button>
+          </div>
+        </article>
+
+        <article class="card visualizer">
+          <div class="card-heading">
+            <p>02 / 状态可视化</p>
+            <h2>概率与振幅</h2>
+          </div>
+          <div id="amplitudes" class="amplitudes"></div>
+          <div id="probability-bars" class="probability-bars"></div>
+        </article>
+
+        <article class="card bloch-card">
+          <div class="card-heading">
+            <p>03 / 单量子位视角</p>
+            <h2>Bloch 球投影</h2>
+          </div>
+          <canvas id="bloch-canvas" width="460" height="360" aria-label="Bloch sphere visualization"></canvas>
+        </article>
+
+        <article class="card output-card">
+          <div class="card-heading">
+            <p>04 / 可复现实验</p>
+            <h2>线路历史与 QASM</h2>
+          </div>
+          <ol id="history" class="history"></ol>
+          <pre id="qasm" class="qasm"></pre>
+        </article>
+      </section>
+    </main>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
