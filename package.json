@@ -1,0 +1,17 @@
+{
+  "name": "quantum-computing-playground",
+  "version": "1.0.0",
+  "description": "一个零依赖的量子计算教学与模拟 Web 应用。",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "test": "node --test"
+  },
+  "keywords": [
+    "quantum",
+    "simulator",
+    "education",
+    "web-app"
+  ],
+  "license": "MIT"
+}
